@@ -42,16 +42,20 @@ public:
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 for (int k = 0; k < 3; k++)
-                    tmp.data[i][j] += data[i][k] * M.data[k][j];
+                    tmp.data[i][j] += data[i][k] * tmp.data[k][j];
         return tmp;
     }
 
     Matrix3 operator*(int k) const {
         Matrix3 tmp(*this);
-        for (auto & i : tmp.data)
-            for (int & j : i)
+        for (auto &i: tmp.data)
+            for (int &j: i)
                 j *= k;
         return tmp;
+    }
+
+    friend Matrix3 operator*(int k, const Matrix3 &M) {
+        return M * k;
     }
 
     friend istream &operator>>(istream &input, Matrix3 &matrix) {
