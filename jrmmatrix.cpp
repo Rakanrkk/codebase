@@ -15,7 +15,7 @@ class Matrix3 {
 
     int v[3][3]{};
 public:
-    Vector3 operator*(const Vector3 &V);
+    Vector3 operator*(const Vector3 &vector3);
 
     Matrix3() {
         memset(v, 0, sizeof v);

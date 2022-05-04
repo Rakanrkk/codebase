@@ -7,80 +7,80 @@
 #include <algorithm>
 using namespace std;
 
-class CubeVector {
+class Vector3 {
 public:
-    explicit CubeVector(int x = 0, int y = 0, int z = 0) : x(x), y(y), z(z) {}
+    explicit Vector3(int x = 0, int y = 0, int z = 0) : x(x), y(y), z(z) {}
 
-    ~CubeVector() = default;
+    ~Vector3() = default;
 
     double abs() const {
         return sqrt(x * x + y * y + z * z);
     }
 
-    bool operator==(const CubeVector &cv) const {
+    bool operator==(const Vector3 &cv) const {
         return this->abs() == cv.abs();
     }
 
-    bool operator!=(const CubeVector &cv) const {
+    bool operator!=(const Vector3 &cv) const {
         return !(*this == cv);
     }
 
-    bool operator<(const CubeVector &cv) const {
+    bool operator<(const Vector3 &cv) const {
         return this->abs() < cv.abs();
     }
 
-    bool operator<=(const CubeVector &cv) const {
+    bool operator<=(const Vector3 &cv) const {
         return this->abs() <= cv.abs();
     }
 
-    bool operator>(const CubeVector &cv) const {
+    bool operator>(const Vector3 &cv) const {
         return this->abs() > cv.abs();
     }
 
-    bool operator>=(const CubeVector &cv) const {
+    bool operator>=(const Vector3 &cv) const {
         return this->abs() >= cv.abs();
     }
 
-    CubeVector &operator=(const CubeVector &cv) = default;
+    Vector3 &operator=(const Vector3 &cv) = default;
 
-    CubeVector operator+(const CubeVector &cv) const {
-        CubeVector result;
+    Vector3 operator+(const Vector3 &cv) const {
+        Vector3 result;
         result.x = x + cv.x;
         result.y = y + cv.y;
         result.z = z + cv.z;
         return result;
     }
 
-    CubeVector operator-(const CubeVector &cv) const {
-        CubeVector result;
+    Vector3 operator-(const Vector3 &cv) const {
+        Vector3 result;
         result.x = x - cv.x;
         result.y = y - cv.y;
         result.z = z - cv.z;
         return result;
     }
 
-    CubeVector operator*(const int k) const {
-        CubeVector result;
+    Vector3 operator*(const int k) const {
+        Vector3 result;
         result.x = x * k;
         result.y = y * k;
         result.z = z * k;
         return result;
     }
 
-    CubeVector operator*(const CubeVector &cv) const {
-        CubeVector result;
+    Vector3 operator*(const Vector3 &cv) const {
+        Vector3 result;
         result.x = y * cv.z - z * cv.y;
         result.y = z * cv.x - x * cv.z;
         result.z = x * cv.y - y * cv.x;
         return result;
     }
 
-    friend istream &operator>>(istream &input, CubeVector &cv) {
+    friend istream &operator>>(istream &input, Vector3 &cv) {
         input >> cv.x >> cv.y >> cv.z;
         return input;
     }
 
-    friend ostream &operator<<(ostream &output, const CubeVector &cv) {
+    friend ostream &operator<<(ostream &output, const Vector3 &cv) {
         output << cv.x << " " << cv.y << " " << cv.z;
         return output;
     }
@@ -94,7 +94,7 @@ private:
 int main() {
     int n;
     cin >> n;
-    CubeVector data[n];
+    Vector3 data[n];
     for (int i = 0; i < n; i++) {
         cin >> data[i];
     }
