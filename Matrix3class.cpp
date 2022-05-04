@@ -17,39 +17,39 @@ public:
 
     ~Matrix3() = default;
 
-    Matrix3 operator+(const Matrix3 &matrix3) {
-        Matrix3 tmp = matrix3;
+    Matrix3 operator+(const Matrix3 &matrix3) const {
+        Matrix3 tmp = *this;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; ++j) {
-                tmp.data[i][j] += data[i][j];
+                tmp.data[i][j] += matrix3.data[i][j];
             }
         }
         return tmp;
     }
 
-    Matrix3 operator-(const Matrix3 &matrix3) {
-        Matrix3 tmp = matrix3;
+    Matrix3 operator-(const Matrix3 &matrix3) const {
+        Matrix3 tmp = *this;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                tmp.data[i][j] -= data[i][j];
+                tmp.data[i][j] -= matrix3.data[i][j];
             }
         }
         return tmp;
     }
 
-    Matrix3 operator*(const Matrix3 &matrix3) {
-        Matrix3 tmp;
+    Matrix3 operator*(const Matrix3 &matrix3) const {
+        Matrix3 tmp ;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
                 for (int k = 0; k < 3; k++)
-                    tmp.data[i][j] += data[i][k] * tmp.data[k][j];
+                    tmp.data[i][j] += data[i][k] * matrix3.data[k][j];
         return tmp;
     }
 
     Matrix3 operator*(int k) const {
-        Matrix3 tmp(*this);
+        Matrix3 tmp = *this;
         for (auto &i: tmp.data)
-            for (int &j: i)
+            for (auto &j: i)
                 j *= k;
         return tmp;
     }
@@ -60,17 +60,17 @@ public:
 
     friend istream &operator>>(istream &input, Matrix3 &matrix) {
         for (auto &i: matrix.data) {
-            for (int &j: i) {
-                cin >> j;
+            for (auto &j: i) {
+                input >> j;
             }
         }
         return input;
     }
 
-    friend ostream &operator<<(ostream &output, Matrix3 &matrix) {
+    friend ostream &operator<<(ostream &output, const Matrix3 &matrix) {
         for (auto &i: matrix.data) {
-            for (int &j: i) {
-                cout << j << ' ';
+            for (auto &j: i) {
+                output << j << ' ';
             }
         }
         return output;
@@ -80,3 +80,13 @@ private:
     int data[3][3]{};
 
 };
+
+int main() {
+    int k;
+    cin >> k;
+    Matrix3 m1, m2, m3;
+    cin >> m1 >> m2 >> m3;
+    cout << (m1 + m2 - m3) * k << endl;
+    cout << (m1 * m2 * m3) * k << endl;
+    return 0;
+}
