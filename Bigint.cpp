@@ -9,8 +9,7 @@ using namespace std;
 class Bigint : public vector<int> {
 public:
 
-    Bigint(int n = 0)//默认初始化为0，但0的保存形式为空
-    {
+    Bigint(int n = 0){
         push_back(n);
         check();
     }
@@ -27,7 +26,7 @@ public:
             (*this)[size() - 2] %= 10;
         }
         return *this;//为使用方便，将进位后的自身返回引用
-    }//在各类运算中经常用到的进位小函数，不妨内置
+    }
 
     Bigint operator*(const Bigint &bigint) const {
         Bigint result;
@@ -51,7 +50,7 @@ public:
 
 //减法，返回差的绝对值，由于后面有交换，故参数不用引用
     Bigint &operator-=(Bigint b) {
-        if (*this < b) swap( b);
+        if (*this < b) swap(b);
         for (int i = 0; i != b.size(); (*this)[i] -= b[i], ++i)
             if ((*this)[i] < b[i])//需要借位
             {
@@ -69,10 +68,13 @@ public:
         return *this -= b;
     }
 
+    Bigint operator-(const int i) {
+        return *this-=i;
+    }
+
     Bigint &operator*=(const Bigint &bigint) {
         return *this = *this * bigint;
     }
-
 
     bool operator!=(const Bigint &bigint) {
         if (size() != bigint.size()) return true;
@@ -85,21 +87,9 @@ public:
         return !(*this != b);
     }
 
-    bool operator==(const Bigint &a, const Bigint &b) {
+    friend bool operator==(const Bigint &a, const Bigint &b){
         return !(a != b);
     }
-
-
-    Bigint pow(const Bigint &k) {
-        if (k.empty()) return 1;
-        if (k == 2) return *this * *this;
-        if (k.front() % 2)return *this * pow(*this, k - 1);
-        return pow(pow(*this, k / 2), 2);
-    }
-
-//    friend bool operator==(const Bigint &a, const Bigint &b) {
-//        return !(a != b);
-//    }
 
     friend istream &operator>>(istream &input, Bigint &bigint) {
         string tmp;
@@ -115,32 +105,16 @@ public:
         return output;
     }
 
+    Bigint test(const Bigint &bigint)
+    {
+        return bigint + 2;
+    }
 };
 
 
-bool operator==(const Bigint &a, const Bigint &b) {
-    return !(a != b);
-}
-
-
-
-
-bool operator!=(const Bigint &a, const Bigint &b) {
-    if (a.size() != b.size())return true;
-    for (int i = a.size() - 1; i >= 0; --i)
-        if (a[i] != b[i])return true;
-    return false;
-}
-
-Bigint pow(const Bigint &n, const Bigint &k) {
-    if (k.empty())return 1;
-    if (k == 2)return n * n;
-    if (k.front() % 2)return n * pow(n, k - 1);
-    return pow(pow(n, k / 2), 2);
-}
 int main() {
-    Bigint k(2);
+    Bigint k;
     k = 2;
-    k = k * 2;
+    k == 2;
     return 0;
 }
